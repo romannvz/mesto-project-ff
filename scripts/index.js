@@ -11,11 +11,12 @@
 const container = document.querySelector(".places__list");
 const template = document.querySelector("#card-template").content;
 
-function createCard(card, deleteCard) {
+function createCard(cardItem, deleteCard) {
+  console.log('successfull');
   const card = template.querySelector(".places__item").cloneNode(true);
-  card.querySelector(".card__image").src = card.link;
-  card.querySelector(".card__image").alt = card.name;
-  card.querySelector(".card__title").textContent = card.name;
+  card.querySelector(".card__image").src = cardItem.link;
+  card.querySelector(".card__image").alt = cardItem.name;
+  card.querySelector(".card__title").textContent = cardItem.name;
   const deleteButton = card.querySelector(".card__delete-button");
   deleteButton.addEventListener("click", deleteCard);
   return card;
