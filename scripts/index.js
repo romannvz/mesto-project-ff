@@ -12,7 +12,6 @@ const container = document.querySelector(".places__list");
 const template = document.querySelector("#card-template").content;
 
 function createCard(cardItem, deleteCard) {
-  console.log('successfull');
   const card = template.querySelector(".places__item").cloneNode(true);
   card.querySelector(".card__image").src = cardItem.link;
   card.querySelector(".card__image").alt = cardItem.name;
