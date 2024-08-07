@@ -8,10 +8,12 @@ const template = document.querySelector("#card-template").content;
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
 
-const popupEditProfile = document.querySelector(".popup_type_edit");
-const popupNewCard = document.querySelector(".popup_type_new-card");
-const popupFullScreen = document.querySelector(".popup_type_image");
-const popups = [popupEditProfile, popupNewCard, popupFullScreen];
+const profilePopup = document.querySelector(".popup_type_edit");
+const profilePopupSave = profilePopup.querySelector(".popup__button");
+const cardPopup = document.querySelector(".popup_type_new-card");
+const cardPopupSave = cardPopup.querySelector(".popup__button");
+const imagePopup = document.querySelector(".popup_type_image");
+const popups = [profilePopup, cardPopup, imagePopup];
 
 popups.forEach((item) => {
   item.classList.add("popup_is-animated");
@@ -21,23 +23,17 @@ popups.forEach((item) => {
     .addEventListener("click", () => closeModal(item));
 });
 
-const fullScreenName = popupFullScreen.querySelector(".popup__caption");
-const fullScreenImage = popupFullScreen.querySelector(".popup__image");
+const fullScreenName = imagePopup.querySelector(".popup__caption");
+const fullScreenImage = imagePopup.querySelector(".popup__image");
 
-popupEditProfile
-  .querySelector(".popup__button")
-  .addEventListener("click", editInfo);
-popupNewCard.querySelector(".popup__button").addEventListener("click", addCard);
+profilePopupSave.addEventListener("click", editInfo);
+cardPopupSave.addEventListener("click", addCard);
 
-const popupEditProfileName = popupEditProfile.querySelector(
-  ".popup__input_type_name"
-);
-const popupEditProfileDesc = popupEditProfile.querySelector(
-  ".popup__input_type_description"
-);
+const fieldName = profilePopup.querySelector(".popup__input_type_name");
+const fieldDesc = profilePopup.querySelector(".popup__input_type_description");
 
-profileEditButton.addEventListener("click", () => openModal(popupEditProfile));
-addCardButton.addEventListener("click", () => openModal(popupNewCard));
+profileEditButton.addEventListener("click", () => openModal(profilePopup));
+addCardButton.addEventListener("click", () => openModal(cardPopup));
 
 const profileName = document.querySelector(".profile__title");
 const profileDesc = document.querySelector(".profile__description");
@@ -58,14 +54,14 @@ function fillingFullScreenModal(item) {
   fullScreenName.textContent = item.cardImage.alt;
   fullScreenImage.alt = item.cardImage.alt;
   fullScreenImage.src = item.cardImage.src;
-  openModal(popupFullScreen);
+  openModal(imagePopup);
 }
 
 function editInfo(evt) {
   evt.preventDefault();
-  profileName.textContent = popupEditProfileName.value;
-  profileDesc.textContent = popupEditProfileDesc.value;
-  closeModal(popupEditProfile);
+  profileName.textContent = fieldName.value;
+  profileDesc.textContent = fieldDesc.value;
+  closeModal(profilePopup);
 }
 
 function addCard(evt) {
@@ -77,5 +73,5 @@ function addCard(evt) {
     createCard(template, addcard, deleteCard, liked, fillingFullScreenModal)
   );
   addForm.reset();
-  closeModal(popupNewCard);
+  closeModal(cardPopup);
 }
