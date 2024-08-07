@@ -1,6 +1,7 @@
 import "../src/pages/index.css";
 import { initialCards } from "./cards.js";
 import { createCard, liked, deleteCard } from "./components/card.js";
+import { openModal } from "./components/modal.js";
 import { openPopup, closePopup, popup } from "./components/popup.js";
 
 export const container = document.querySelector(".places__list");
@@ -8,8 +9,8 @@ export const template = document.querySelector("#card-template").content;
 const profileEditButton = document.querySelector(".profile__edit-button");
 const addCardButton = document.querySelector(".profile__add-button");
 
-profileEditButton.addEventListener("click", openPopup);
-addCardButton.addEventListener("click", openPopup);
+profileEditButton.addEventListener("click", openModal);
+addCardButton.addEventListener("click", openModal);
 
 export const profileName = document.querySelector(".profile__title");
 export const profileDesc = document.querySelector(".profile__description");
@@ -24,7 +25,7 @@ export const popupNewCard = document.querySelector(".popup_type_new-card");
 export const popupFullScreen = document.querySelector(".popup_type_image");
 
 initialCards.forEach((item) => {
-  container.append(createCard(item, deleteCard, liked, openPopup));
+  container.append(createCard(template, item, deleteCard, liked, openPopup));
 });
 
 export function editInfo(evt) {
@@ -42,7 +43,7 @@ export function addCard(evt) {
   evt.preventDefault();
   addcard.name = addForm["place-name"].value;
   addcard.link = addForm.link.value;
-  container.prepend(createCard(addcard, deleteCard, liked, openPopup));
+  container.prepend(createCard(template, addcard, deleteCard, liked, openPopup));
   addForm["place-name"].value = "";
   addForm.link.value = "";
   closePopup(evt);

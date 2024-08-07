@@ -1,16 +1,16 @@
-import {
-  popupEditProfile,
-  popupNewCard,
-  popupFullScreen,
-  profileName,
-  profileDesc,
-  editForm,
-} from "../index.js";
+// import {
+//   popupEditProfile,
+//   popupNewCard,
+//   popupFullScreen,
+//   profileName,
+//   profileDesc,
+//   editForm,
+// } from "../index.js";
 
-import { editInfo, addCard } from "../index.js";
+// import { editInfo, addCard } from "../index.js";
 
-export let popup;
-let closeButton;
+// export let popup;
+// let closeButton;
 
 export function openPopup(evt) {
   const e = evt.currentTarget;
@@ -36,18 +36,32 @@ export function openPopup(evt) {
 }
 
 export function catchClick(event) {
-  if (event.target.classList === event.currentTarget.classList) {
+  if (event.target === event.currentTarget) {
     closeButton.click();
   }
 }
 
 export function tapEscape(evv) {
   if (evv.key === "Escape") {
-    closeButton.click();
+    const openedPopup = document.querySelector('.popup_is-opened');
+      closeModal(openedPopup); 
   }
 }
 
 export function closePopup(event) {
   event.currentTarget.closest(".popup").classList.remove("popup_is-opened");
+  document.removeEventListener("keydown", tapEscape);
+}
+
+export function openModal(popup) {
+  popup.classList.add("popup_is-opened"); //не забыть добавить всем попапам в глобальном файле "ис анимейтед"
+  const closeButton = popup.querySelector(".popup__close");
+  closeButton.addEventListener("click", closePopup);
+  popup.addEventListener("click", catchClick);
+  document.addEventListener("keydown", tapEscape);
+}
+
+export function closeModal(popup) {
+  popup.classList.remove("popup_is-opened");
   document.removeEventListener("keydown", tapEscape);
 }

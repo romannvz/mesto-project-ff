@@ -1,12 +1,13 @@
-export function createCard(cardItem, deleteCard, liked, openPopup) {
+export function createCard(template, cardItem, deleteCard, liked, openPopup) {
   const card = template.querySelector(".places__item").cloneNode(true);
-  card.querySelector(".card__image").src = cardItem.link;
-  card.querySelector(".card__image").alt = cardItem.name;
+  const cardImage = card.querySelector(".card__image");
+  cardImage.src = cardItem.link;
+  cardImage.alt = cardItem.name;
   card.querySelector(".card__title").textContent = cardItem.name;
   const deleteButton = card.querySelector(".card__delete-button");
   const likeButton = card.querySelector(".card__like-button");
   deleteButton.addEventListener("click", deleteCard);
-  card.querySelector(".card__image").addEventListener("click", openPopup);
+  cardImage.addEventListener("click", openPopup);
   likeButton.addEventListener("click", liked);
   return card;
 }
@@ -18,5 +19,3 @@ export function liked(evt) {
 export function deleteCard(event) {
   event.target.closest(".places__item").remove();
 }
-
-import { template } from "../index.js";
