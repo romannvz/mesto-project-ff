@@ -7,6 +7,34 @@
   background-size: cover;
   background-position: center;
   margin: 0 29px 0 0;
+  transition: 0.3s;
+}
+
+.profile__image:hover:has(.profile__image-button) {
+  opacity: 0.6;
+  transition: 0.3s;
+}
+.profile__image-button {
+  background-repeat: no-repeat;
+  content: "";
+  display: block;
+  height: 100%;
+  opacity: 0;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  border: none;
+}
+
+.profile__image-button:hover {
+  background: transparent url("../../../images/edit-icon.svg") center no-repeat;
+  opacity: 100%;
+}
+
+.avatar-button {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 @media screen and (max-width: 740px) {
