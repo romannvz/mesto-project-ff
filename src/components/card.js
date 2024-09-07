@@ -18,14 +18,18 @@ export function createCard(
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("card__delete-button");
     cardImage.insertAdjacentElement("afterend", deleteButton);
-    deleteButton.addEventListener("click", () => deleteCard(cardItem._id));
+    deleteButton.addEventListener("click", () =>
+      deleteCard(cardItem, deleteButton)
+    );
   }
   const likeButton = card.querySelector(".card__like-button");
   if (isLiked(cardItem, userId)) {
     likeButton.classList.add("card__like-button_is-active");
   }
-  likeButton.addEventListener("click", () => liked(cardItem));
   const likeCounter = card.querySelector(".like_button-label");
+  likeButton.addEventListener("click", () =>
+    liked(cardItem, likeButton, likeCounter)
+  );
   counterLikes(likeCounter, cardItem.likes.length);
   return card;
 }
@@ -44,17 +48,25 @@ function isLiked(card, id) {
   return perem;
 }
 
-export function liked(card) {
-  let label = event.target.nextElementSibling;
-  event.target.classList.toggle("card__like-button_is-active");
-  if (event.target.classList.contains("card__like-button_is-active")) {
-    setLike(card._id).then((result) => {
-      counterLikes(label, result.likes.length);
-    });
+export function liked(card, button, label) {
+  if (!button.classList.contains("card__like-button_is-active")) {
+    setLike(card._id)
+      .then((result) => {
+        counterLikes(label, result.likes.length);
+        button.classList.toggle("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   } else {
-    popLike(card._id).then((result) => {
-      counterLikes(label, result.likes.length);
-    });
+    popLike(card._id)
+      .then((result) => {
+        counterLikes(label, result.likes.length);
+        button.classList.toggle("card__like-button_is-active");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
 
@@ -62,9 +74,13 @@ function counterLikes(label, value) {
   label.textContent = value;
 }
 
-export function deleteCard(id) {
-  let card = event.target.closest(".places__item");
-  popCard(id).then(() => {
-    card.remove();
-  });
+export function deleteCard(card, button) {
+  popCard(card._id)
+    .then((value) => {
+      button.closest(".places__item").remove();
+      console.log(value);
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }

@@ -1,12 +1,3 @@
-export const validationConfig = new Object({
-  formSelector: ".popup__form",
-  inputSelector: ".popup__input",
-  submitButtonSelector: ".popup__button",
-  inactiveButtonClass: "popup__button_disabled",
-  inputErrorClass: "popup__input_error",
-  errorClass: "input_error_active",
-});
-
 export const enableValidation = (config) => {
   const formList = Array.from(document.querySelectorAll(config.formSelector));
   formList.forEach((formElement) => {
@@ -17,7 +8,7 @@ export const enableValidation = (config) => {
     if (formElement.name === "new-place") {
       disablingButton(
         formElement.querySelector(config.submitButtonSelector),
-        config.inactiveButtonClass
+        config
       );
     }
   });
@@ -109,16 +100,16 @@ const checkFormValidity = (formElement, button, config) => {
     }
   });
   if (status) {
-    enablingButton(button, config.inactiveButtonClass);
+    enablingButton(button, config);
   }
 };
 
-const enablingButton = (button, buttonClass) => {
+const enablingButton = (button, config) => {
   button.disabled = false;
-  button.classList.remove(buttonClass);
+  button.classList.remove(config.inactiveButtonClass);
 };
 
-export const disablingButton = (button, buttonClass) => {
+export const disablingButton = (button, config) => {
   button.disabled = true;
-  button.classList.add(buttonClass);
+  button.classList.add(config.inactiveButtonClass);
 };

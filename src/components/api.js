@@ -10,36 +10,32 @@ export function getProfileInfo() {
   return fetch(`${config.baseUrl}/users/me`, {
     method: "GET",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        console.log("Информация профиля получена.");
-        return res.json();
-      } else {
-        return `Ошибка при запросе данных пользователя. Статус запроса: ${res.status}`;
-      }
-    })
-    .catch((value) => {
-      console.error(value);
-    });
+  }).then((res) => {
+    if (res.ok) {
+      console.log("Информация профиля получена.");
+      return res.json();
+    } else {
+      return Promise.reject(
+        `Ошибка при запросе данных пользователя. Статус запроса: ${res.status}`
+      );
+    }
+  });
 }
 
 export function getCards() {
   return fetch(`${config.baseUrl}/cards`, {
     method: "GET",
     headers: config.headers,
-  })
-    .then((res) => {
-      if (res.ok) {
-        console.log("Карточки с сервера получены.");
-        return res.json();
-      } else {
-        return `Ошибка при запросе карточек. Статус запроса: ${res.status}`;
-      }
-    })
-    .catch((value) => {
-      console.error(value);
-    });
+  }).then((res) => {
+    if (res.ok) {
+      console.log("Карточки с сервера получены.");
+      return res.json();
+    } else {
+      return Promise.reject(
+        `Ошибка при запросе карточек. Статус запроса: ${res.status}`
+      );
+    }
+  });
 }
 
 export function insertProfieInfo(newName, newDesc) {
@@ -52,11 +48,11 @@ export function insertProfieInfo(newName, newDesc) {
     }),
   }).then((res) => {
     if (res.ok) {
-      console.log(
+      return Promise.resolve(
         `Данные профиля отправлены. Сервер вернул статус: ${res.status}`
       );
     } else {
-      console.error(
+      return Promise.reject(
         `Ошибка при передаче данных профиля на сервер. Статус ответа: ${res.status}`
       );
     }
@@ -76,12 +72,11 @@ export function insertNewCard(card) {
       console.log(
         `Данные карточки отправлены. Сервер вернул статус: ${res.status}`
       );
-      return res.json();
+      return Promise.resolve(res.json());
     } else {
-      console.error(
+      return Promise.reject(
         `Ошибка при передаче данных карточки на сервер. Статус ответа: ${res.status}`
       );
-      return res.json();
     }
   });
 }
@@ -95,9 +90,11 @@ export function setNewAvatar(avatar_link) {
     }),
   }).then((res) => {
     if (res.ok) {
-      console.log(`Аватар обновлён. Сервер вернул статус: ${res.status}`);
+      return Promise.resolve(
+        `Аватар обновлён. Сервер вернул статус: ${res.status}`
+      );
     } else {
-      console.error(
+      return Promise.reject(
         `Ошибка при обновлении аватара. Статус ответа: ${res.status}`
       );
     }
@@ -113,7 +110,7 @@ export function setLike(id) {
       console.log(`Лайк поставлен. Сервер вернул статус: ${res.status}`);
       return res.json();
     } else {
-      return console.error(
+      return Promise.reject(
         `Ошибка при лайке карточки. Статус ответа: ${res.status}`
       );
     }
@@ -129,7 +126,7 @@ export function popLike(id) {
       console.log(`Лайк убран. Сервер вернул статус: ${res.status}`);
       return res.json();
     } else {
-      return console.error(
+      return Promise.reject(
         `Ошибка при отмене лайка карточки. Статус ответа: ${res.status}`
       );
     }
@@ -142,11 +139,11 @@ export function popCard(id) {
     headers: config.headers,
   }).then((res) => {
     if (res.ok) {
-      return console.log(
+      return Promise.resolve(
         `Карточка удалена. Сервер вернул статус: ${res.status}`
       );
     } else {
-      return console.error(
+      return Promise.reject(
         `Ошибка при удалении карточки. Статус ответа: ${res.status}`
       );
     }
