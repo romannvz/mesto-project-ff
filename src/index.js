@@ -79,6 +79,10 @@ profileEditButton.addEventListener("click", () => {
 addCardButton.addEventListener("click", () => {
   addForm.reset();
   clearValidation(addForm, validationConfig);
+  disablingButton(
+    addForm.querySelector(`${validationConfig.submitButtonSelector}`),
+    validationConfig
+  );
   openModal(cardPopup);
 });
 

@@ -5,12 +5,6 @@ export const enableValidation = (config) => {
       evt.preventDefault();
     });
     setEventListeners(formElement, config);
-    if (formElement.name === "new-place") {
-      disablingButton(
-        formElement.querySelector(config.submitButtonSelector),
-        config
-      );
-    }
   });
 };
 
@@ -78,7 +72,7 @@ const showInputError = (
   errorElement.textContent = errorMessage;
   errorElement.classList.add(config.errorClass);
   errorMessage = "";
-  disablingButton(button, config.inactiveButtonClass);
+  disablingButton(button, config);
 };
 
 const hideInputError = (formElement, inputElement, button, config) => {
